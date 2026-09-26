@@ -1,7 +1,8 @@
-import { MODULE_ID, t } from "./constants.js";
+import { MODULE_ID, backToTokenControls, t } from "./constants.js";
 import { emptyPlan } from "./reading.js";
 import { TarokkaReadingApp } from "./reading-app.js";
 import { TarokkaCardsConfig } from "./cards-config.js";
+import { TarokkaState } from "./state.js";
 
 function rerender() {
   const open = Object.values(ui.windows).find((app) => app instanceof TarokkaReadingApp);
@@ -15,7 +16,7 @@ Hooks.once("init", () => {
     scope: "world",
     config: false,
     type: Object,
-    default: { id: null, positions: [] },
+    default: { id: null, broadcast: false, positions: [] },
     onChange: (reading) => TarokkaReadingApp.onReadingChanged(reading)
   });
 
@@ -23,14 +24,16 @@ Hooks.once("init", () => {
     scope: "client",
     config: false,
     type: Object,
-    default: emptyPlan()
+    default: emptyPlan(),
+    onChange: rerender
   });
 
   game.settings.register(MODULE_ID, "secret", {
     scope: "client",
     config: false,
     type: Object,
-    default: { id: null, cards: [], stages: [] }
+    default: { id: null, broadcast: false, cards: [], stages: [] },
+    onChange: rerender
   });
 
   game.settings.register(MODULE_ID, "cardOverrides", {
@@ -51,7 +54,20 @@ Hooks.once("init", () => {
   });
 });
 
+Hooks.once("ready", () => {
+  if (!game.user.isGM && TarokkaState.getPublic()?.broadcast) {
+    new TarokkaReadingApp().render(true);
+  }
+});
+
 Hooks.on("getSceneControlButtons", (controls) => {
+  if (!game.user.isGM) {
+    return;
+  }
+  const open = () => {
+    new TarokkaReadingApp().render(true);
+    backToTokenControls();
+  };
   const control = {
     name: "tarokka",
     title: t("TAROKKA.Title"),
@@ -65,7 +81,7 @@ Hooks.on("getSceneControlButtons", (controls) => {
         button: true,
         onChange: (event, active) => {
           if (active) {
-            new TarokkaReadingApp().render(true);
+            open();
           }
         }
       }
@@ -73,7 +89,7 @@ Hooks.on("getSceneControlButtons", (controls) => {
     activeTool: "open"
   };
   if (Array.isArray(controls)) {
-    controls.push({ ...control, tools: Object.values(control.tools).map((tool) => ({ ...tool, onClick: () => new TarokkaReadingApp().render(true) })) });
+    controls.push({ ...control, tools: Object.values(control.tools).map((tool) => ({ ...tool, onClick: open })) });
     return;
   }
   controls.tarokka = control;

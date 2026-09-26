@@ -9,16 +9,18 @@ Foundry VTT module for Madame Eva's **Tarokka reading** in *Curse of Strahd*. Wo
 - **The five-card cross** — The Tome of Strahd, the Holy Symbol of Ravenkind and the Sunsword from the common deck; the Ally and Strahd's lair from the high deck (Crowns).
 - **Prepared or random** — The GM picks a card for each position ahead of time, or leaves it to chance. Duplicates and wrong decks are flagged.
 - **Dealt face down, revealed one by one** — Cards slide into the cross face down; the GM flips each one with a click, when the story calls for it, and each flip plays for every player at the same time.
-- **Secret until revealed** — Only revealed cards are shared with the players; the full reading and the GM notes stay on the GM's browser. Players see neither the position names nor the notes.
+- **GM only, shown when the GM decides** — Only the GM sees the tool. **Show to players** opens the window for them, **Stop showing** closes it; nothing is shared until then.
+- **Secret until revealed** — While shown, only revealed cards are shared with the players; the full reading and the GM notes stay on the GM's browser. Players see neither the position names nor the notes.
 - **Generic cards out of the box** — The module ships no artwork: cards are drawn in CSS. The GM can rename any card and give it an image.
 - **English and French**, following Foundry's language.
 
 ## Usage
 
-1. **Diamond** icon in the left toolbar opens the reading.
-2. **Prepare** (GM): choose a card or *Random* for each position, and add a note if you like.
-3. **Deal**: the cards are dealt face down; the window opens automatically for the players.
-4. **Deal next card**: the next card (1 to 5, in order) slides onto the table face down. Click it when you want to flip it, to follow your narration. **Reveal all** shows every card at once, **Reset** clears the table.
+1. **Diamond** icon in the left toolbar opens the reading. Only the GM sees it.
+2. **Prepare** shows the preparation in place of the table (click again to go back): choose a card or *Random* for each position, and add a note if you like.
+3. **Show to players** opens the window for the players, before or after dealing. **Stop showing** closes it.
+4. **New reading** deals the cards. If a reading is already in progress, you are asked to confirm.
+5. Everything then happens on the table: click the glowing slot to lay the next card face down, then click the card to flip it, following your narration. A line under the table tells you the next step.
 
 ## Card images
 

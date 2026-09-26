@@ -1,19 +1,17 @@
 <div class="tk-reading">
   {{#if isGM}}
   <nav class="tk-toolbar">
-    <button type="button" data-tk-action="setup" class="{{#if setupOpen}}active{{/if}}">{{localize "TAROKKA.Prepare"}}</button>
-    <button type="button" data-tk-action="deal" {{#unless canDeal}}disabled{{/unless}}>{{localize "TAROKKA.Deal"}}</button>
-    {{#if hasNext}}
-    <button type="button" class="tk-next" data-tk-action="next">{{localize "TAROKKA.Next"}}</button>
-    {{/if}}
-    {{#if dealt}}
-    <button type="button" data-tk-action="reveal-all">{{localize "TAROKKA.RevealAll"}}</button>
-    <button type="button" data-tk-action="reset">{{localize "TAROKKA.Reset"}}</button>
+    <button type="button" class="{{#if preparing}}active{{/if}}" data-tk-action="prepare">{{localize "TAROKKA.Prepare"}}</button>
+    <button type="button" data-tk-action="deal" {{#unless canDeal}}disabled title="{{localize 'TAROKKA.FixPlan'}}"{{/unless}}>{{localize "TAROKKA.NewReading"}}</button>
+    {{#if broadcasting}}
+    <button type="button" class="tk-broadcast is-live" data-tk-action="stop-broadcast">{{localize "TAROKKA.StopBroadcast"}}</button>
+    {{else}}
+    <button type="button" class="tk-broadcast" data-tk-action="broadcast">{{localize "TAROKKA.Broadcast"}}</button>
     {{/if}}
   </nav>
   {{/if}}
 
-  {{#if setupOpen}}
+  {{#if preparing}}
   <section class="tk-setup">
     <p class="tk-setup-hint">{{localize "TAROKKA.SetupHint"}}</p>
     {{#each setup}}
@@ -30,8 +28,7 @@
     </div>
     {{/each}}
   </section>
-  {{/if}}
-
+  {{else}}
   <div class="tk-table">
     {{#each slots}}
     <div class="tk-slot tk-slot-{{this.id}}">
@@ -54,7 +51,7 @@
         </div>
       </div>
       {{else}}
-      <div class="tk-card-placeholder {{#if this.dealt}}is-dealt{{/if}} {{#if this.isNext}}is-next{{/if}}" {{#if this.isNext}}data-next-slot title="{{localize 'TAROKKA.Next'}}"{{/if}}>
+      <div class="tk-card-placeholder {{#if this.dealt}}is-dealt{{/if}} {{#if this.isNext}}is-next{{/if}}" {{#if this.isNext}}data-next-slot {{/if}}>
         <span>{{this.number}}</span>
       </div>
       {{/if}}
@@ -71,4 +68,9 @@
     </div>
     {{/each}}
   </div>
+
+  {{#if isGM}}
+  <p class="tk-step">{{step}}</p>
+  {{/if}}
+  {{/if}}
 </div>

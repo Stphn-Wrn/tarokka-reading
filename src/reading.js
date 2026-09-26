@@ -62,6 +62,13 @@ export function publicReading(cards, stages) {
   });
 }
 
+export function sharedReading(secret) {
+  if (!secret.broadcast) {
+    return { id: null, broadcast: false, positions: [] };
+  }
+  return { id: secret.id, broadcast: true, positions: publicReading(secret.cards, secret.stages) };
+}
+
 export function nextToPlace(stages) {
   const index = stages.findIndex((stage) => stage === "hidden");
   if (index < 0) {
@@ -89,6 +96,17 @@ export function flip(stages, index) {
   });
 }
 
-export function revealAll(stages) {
-  return stages.map(() => "revealed");
+export function nextStep(dealt, stages) {
+  if (!dealt) {
+    return { step: "deal" };
+  }
+  const waiting = stages.indexOf("placed");
+  if (waiting >= 0) {
+    return { step: "flip", number: waiting + 1 };
+  }
+  const next = nextToPlace(stages);
+  if (next === null) {
+    return { step: "done" };
+  }
+  return { step: "place", number: next + 1 };
 }

@@ -3,9 +3,6 @@
     "Title": "Tarokka Reading",
     "Open": "Open the Tarokka reading",
     "Prepare": "Prepare",
-    "Deal": "Deal",
-    "RevealAll": "Reveal all",
-    "Reset": "Reset",
     "SetupHint": "Choose a card for each position or leave it to chance. Notes are only visible to you.",
     "Random": "Random",
     "NotePlaceholder": "GM note (what the card reveals)",
@@ -90,7 +87,6 @@
       "seer": "Seer",
       "tempter": "Tempter"
     },
-    "Next": "Deal next card",
     "CardsConfig": {
       "Title": "Customize cards",
       "Hint": "Leave a field empty to keep the printed name or the generic card.",
@@ -117,6 +113,17 @@
       },
       "Or": "or",
       "Recommend": "No images? We recommend the <a href=\"https://www.pyramking.com/tarokka-deck/\" target=\"_blank\" rel=\"noopener\">Digital Color Tarokka Deck by Pyram King</a> (free, 54 cards in WebP). Import its folder as is, no renaming needed."
+    },
+    "Broadcast": "Show to players",
+    "StopBroadcast": "Stop showing",
+    "NewReading": "New reading",
+    "NewReadingConfirm": "A reading is in progress. Replace it with a new reading?",
+    "FixPlan": "Fix the preparation: a card is used twice or in the wrong deck.",
+    "Steps": {
+      "deal": "Click \"New reading\" to deal the cards.",
+      "place": "Click slot {number} to lay the next card.",
+      "flip": "Click card {number} to flip it.",
+      "done": "Every card is revealed."
     }
   }
 }

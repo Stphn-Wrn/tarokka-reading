@@ -9,16 +9,18 @@ Module Foundry VTT pour le **tirage du Tarokka** de Madame Eva dans *La Malédic
 - **La croix de cinq cartes** — Le Tome de Strahd, le Symbole sacré de Ravenkind et l'Épée du soleil tirés du paquet commun ; l'allié et le repaire de Strahd tirés du paquet des Couronnes.
 - **Préparé ou au hasard** — Le MJ choisit à l'avance une carte pour chaque position, ou laisse faire le hasard. Doublons et mauvais paquets sont signalés.
 - **Distribué face cachée, révélé une à une** — Les cartes glissent dans la croix face cachée ; le MJ retourne chacune d'un clic, au moment voulu, et chaque retournement se joue chez tous les joueurs en même temps.
-- **Secret jusqu'à la révélation** — Seules les cartes retournées sont partagées avec les joueurs ; le tirage complet et les notes du MJ restent sur le navigateur du MJ. Les joueurs ne voient ni le nom des positions ni les notes.
+- **Réservé au MJ, diffusé quand il le décide** — Seul le MJ voit l'outil. **Diffuser aux joueurs** ouvre la fenêtre chez eux, **Arrêter la diffusion** la referme ; sans diffusion, rien n'est partagé.
+- **Secret jusqu'à la révélation** — Pendant la diffusion, seules les cartes retournées sont partagées avec les joueurs ; le tirage complet et les notes du MJ restent sur le navigateur du MJ. Les joueurs ne voient ni le nom des positions ni les notes.
 - **Cartes génériques prêtes à l'emploi** — Le module n'inclut aucune illustration : les cartes sont dessinées en CSS. Le MJ peut renommer chaque carte et lui donner une image.
 - **Français et anglais**, selon la langue de Foundry.
 
 ## Utilisation
 
-1. L'icône **losange** de la barre d'outils de gauche ouvre le tirage.
-2. **Préparer** (MJ) : choisissez une carte ou *Hasard* pour chaque position, et ajoutez une note si besoin.
-3. **Distribuer** : les cartes sont distribuées face cachée ; la fenêtre s'ouvre automatiquement chez les joueurs.
-4. **Poser la carte suivante** : la carte suivante (1 à 5, dans l'ordre) glisse sur la table face cachée. Cliquez dessus quand vous voulez la retourner, au rythme de votre narration. **Tout révéler** montre toutes les cartes d'un coup, **Réinitialiser** vide la table.
+1. L'icône **losange** de la barre d'outils de gauche ouvre le tirage. Elle n'apparaît que pour le MJ.
+2. **Préparer** affiche la préparation à la place de la table (un second clic y revient) : choisissez une carte ou *Hasard* pour chaque position, et ajoutez une note si besoin.
+3. **Diffuser aux joueurs** ouvre la fenêtre chez les joueurs, avant ou après la distribution. **Arrêter la diffusion** la referme.
+4. **Nouveau tirage** distribue les cartes. S'il y a déjà un tirage en cours, une confirmation est demandée.
+5. Tout se passe ensuite sur la table : cliquez sur l'emplacement qui brille pour poser la carte suivante face cachée, puis sur la carte pour la retourner, au rythme de votre narration. Une phrase sous la table indique l'étape suivante.
 
 ## Images des cartes
 

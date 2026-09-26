@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { POSITIONS, flip, nextToPlace, placeNext, planProblems, publicReading, resolveReading, revealAll } from "../src/reading.js";
+import { POSITIONS, flip, nextStep, nextToPlace, placeNext, planProblems, publicReading, resolveReading, sharedReading } from "../src/reading.js";
 
 function sequence(values) {
   let index = 0;
@@ -79,7 +79,46 @@ test("seule une carte posée face cachée peut être retournée", () => {
   assert.deepEqual(flip(stages, 1), stages);
 });
 
-test("tout révéler pose et retourne les cartes restantes", () => {
-  const stages = ["revealed", "placed", "hidden", "hidden", "hidden"];
-  assert.deepEqual(revealAll(stages), ["revealed", "revealed", "revealed", "revealed", "revealed"]);
+test("sans diffusion, les joueurs ne reçoivent rien du tirage, même les cartes retournées", () => {
+  const secret = { id: "abc", broadcast: false, cards: ["swords-3", "stars-1", "coins-2", "raven", "mists"], stages: ["revealed", "placed", "hidden", "hidden", "hidden"] };
+  assert.deepEqual(sharedReading(secret), { id: null, broadcast: false, positions: [] });
+});
+
+test("pendant la diffusion, les joueurs reçoivent le tirage avec seulement les cartes retournées", () => {
+  const secret = { id: "abc", broadcast: true, cards: ["swords-3", "stars-1", "coins-2", "raven", "mists"], stages: ["revealed", "placed", "hidden", "hidden", "hidden"] };
+  assert.deepEqual(sharedReading(secret), {
+    id: "abc",
+    broadcast: true,
+    positions: [
+      { cardId: "swords-3", placed: true, revealed: true },
+      { cardId: null, placed: true, revealed: false },
+      { cardId: null, placed: false, revealed: false },
+      { cardId: null, placed: false, revealed: false },
+      { cardId: null, placed: false, revealed: false }
+    ]
+  });
+});
+
+test("le MJ peut diffuser la table vide avant de distribuer", () => {
+  const secret = { id: null, broadcast: true, cards: [], stages: [] };
+  const shared = sharedReading(secret);
+  assert.equal(shared.broadcast, true);
+  assert.equal(shared.id, null);
+  assert.equal(shared.positions.every((position) => !position.placed), true);
+});
+
+test("avant la distribution, le MJ est invité à lancer un nouveau tirage", () => {
+  assert.deepEqual(nextStep(false, []), { step: "deal" });
+});
+
+test("une carte posée face cachée doit être retournée avant de poser la suivante", () => {
+  assert.deepEqual(nextStep(true, ["revealed", "placed", "hidden", "hidden", "hidden"]), { step: "flip", number: 2 });
+});
+
+test("sinon le MJ pose la carte suivante, dans l'ordre", () => {
+  assert.deepEqual(nextStep(true, ["revealed", "revealed", "hidden", "hidden", "hidden"]), { step: "place", number: 3 });
+});
+
+test("quand toutes les cartes sont retournées, le tirage est terminé", () => {
+  assert.deepEqual(nextStep(true, ["revealed", "revealed", "revealed", "revealed", "revealed"]), { step: "done" });
 });

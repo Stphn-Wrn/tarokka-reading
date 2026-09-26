@@ -1,4 +1,4 @@
-import { MODULE_ID, modulePath, t } from "./constants.js";
+import { MODULE_ID, confirmDialog, modulePath, t } from "./constants.js";
 import { COMMON_DECK, HIGH_DECK } from "./deck.js";
 import { cleanOverrides, customImage, fileSlug, matchFolderImages } from "./customization.js";
 
@@ -7,22 +7,6 @@ const BACK_ID = "back";
 
 function filePickerClass() {
   return foundry.applications?.apps?.FilePicker?.implementation ?? globalThis.FilePicker;
-}
-
-async function confirmDialog(title, content) {
-  const DialogV2 = foundry.applications?.api?.DialogV2;
-  if (DialogV2) {
-    return DialogV2.confirm({ window: { title }, content: `<p>${content}</p>` });
-  }
-  return Dialog.confirm({ title, content: `<p>${content}</p>` });
-}
-
-function displayedName(row) {
-  const input = row.querySelector("[data-name-input]");
-  if (input?.value.trim()) {
-    return input.value;
-  }
-  return row.dataset.printedName;
 }
 
 function row(id, printedName, overrides) {

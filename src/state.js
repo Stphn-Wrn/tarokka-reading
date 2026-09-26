@@ -1,7 +1,7 @@
 import { MODULE_ID } from "./constants.js";
-import { emptyPlan, flip, hiddenStages, placeNext, publicReading, resolveReading, revealAll } from "./reading.js";
+import { emptyPlan, flip, hiddenStages, placeNext, publicReading, resolveReading, sharedReading } from "./reading.js";
 
-const EMPTY_SECRET = { id: null, cards: [], stages: [] };
+const EMPTY_SECRET = { id: null, broadcast: false, cards: [], stages: [] };
 
 export class TarokkaState {
   static getPublic() {
@@ -20,6 +20,11 @@ export class TarokkaState {
     return { ...EMPTY_SECRET, ...game.settings.get(MODULE_ID, "secret") };
   }
 
+  static getGmView() {
+    const secret = this.getSecret();
+    return { id: secret.id, broadcast: secret.broadcast, positions: publicReading(secret.cards, secret.stages) };
+  }
+
   static async savePlan(plan) {
     await game.settings.set(MODULE_ID, "plan", plan);
   }
@@ -29,7 +34,8 @@ export class TarokkaState {
       return;
     }
     const cards = resolveReading(this.getPlan(), Math.random);
-    await this.publish({ id: foundry.utils.randomID(), cards, stages: hiddenStages() });
+    const secret = this.getSecret();
+    await this.publish({ ...secret, id: foundry.utils.randomID(), cards, stages: hiddenStages() });
   }
 
   static async placeNext() {
@@ -40,10 +46,6 @@ export class TarokkaState {
     await this.update((stages) => flip(stages, index));
   }
 
-  static async revealAll() {
-    await this.update(revealAll);
-  }
-
   static async update(change) {
     const secret = this.getSecret();
     if (!game.user.isGM || !secret.id) {
@@ -52,16 +54,15 @@ export class TarokkaState {
     await this.publish({ ...secret, stages: change(secret.stages) });
   }
 
-  static async reset() {
+  static async setBroadcast(broadcast) {
     if (!game.user.isGM) {
       return;
     }
-    await game.settings.set(MODULE_ID, "secret", EMPTY_SECRET);
-    await game.settings.set(MODULE_ID, "reading", { id: null, positions: [] });
+    await this.publish({ ...this.getSecret(), broadcast });
   }
 
   static async publish(secret) {
     await game.settings.set(MODULE_ID, "secret", secret);
-    await game.settings.set(MODULE_ID, "reading", { id: secret.id, positions: publicReading(secret.cards, secret.stages) });
+    await game.settings.set(MODULE_ID, "reading", sharedReading(secret));
   }
 }

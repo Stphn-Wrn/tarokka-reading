@@ -1,46 +1,9 @@
-import { MODULE_ID, modulePath, renderTemplate, t } from "./constants.js";
-import { cardsOfDeck, findCard } from "./deck.js";
-import { POSITIONS, planProblems } from "./reading.js";
+import { confirmDialog, modulePath, t } from "./constants.js";
+import { cardName, cardOverrides, cardView } from "./cards.js";
+import { customImage } from "./customization.js";
+import { POSITIONS, nextStep, planProblems } from "./reading.js";
+import { cardsOfDeck } from "./deck.js";
 import { TarokkaState } from "./state.js";
-import { customImage, customName } from "./customization.js";
-
-const SUIT_ICONS = {
-  swords: "fa-khanda",
-  stars: "fa-star",
-  coins: "fa-coins",
-  glyphs: "fa-ankh",
-  crowns: "fa-crown"
-};
-
-function cardOverrides() {
-  return game.settings.get(MODULE_ID, "cardOverrides") ?? {};
-}
-
-function cardName(cardId) {
-  return customName(cardId, cardOverrides(), t(`TAROKKA.Cards.${cardId}`));
-}
-
-function cardView(cardId) {
-  const card = findCard(cardId);
-  if (!card) {
-    return null;
-  }
-  let valueLabel = "";
-  if (card.value === "master") {
-    valueLabel = "10";
-  } else if (card.value) {
-    valueLabel = card.value;
-  }
-  const image = customImage(card.id, cardOverrides());
-  return {
-    id: card.id,
-    name: cardName(card.id),
-    suit: t(`TAROKKA.Suits.${card.suit}`),
-    value: valueLabel,
-    icon: SUIT_ICONS[card.suit],
-    image
-  };
-}
 
 export class TarokkaReadingApp extends Application {
   static get defaultOptions() {
@@ -48,7 +11,7 @@ export class TarokkaReadingApp extends Application {
       id: "tarokka-reading",
       title: t("TAROKKA.Title"),
       template: modulePath("src/reading.html"),
-      width: 620,
+      width: 560,
       height: "auto",
       resizable: true,
       classes: ["tarokka-reading"]
@@ -57,18 +20,23 @@ export class TarokkaReadingApp extends Application {
 
   static onReadingChanged(reading) {
     const open = Object.values(ui.windows).find((app) => app instanceof TarokkaReadingApp);
+    if (game.user.isGM) {
+      return;
+    }
+    if (!reading?.broadcast) {
+      open?.close();
+      return;
+    }
     if (open) {
       open.render(false);
       return;
     }
-    if (reading?.id && !game.user.isGM) {
-      new TarokkaReadingApp().render(true);
-    }
+    new TarokkaReadingApp().render(true);
   }
 
   constructor(options = {}) {
     super(options);
-    this.setupOpen = false;
+    this.preparing = false;
     this.lastDealId = null;
     this.shownPlaced = new Set();
     this.shownRevealed = new Set();
@@ -76,7 +44,10 @@ export class TarokkaReadingApp extends Application {
 
   getData() {
     const isGM = game.user.isGM;
-    const reading = TarokkaState.getPublic();
+    let reading = TarokkaState.getPublic();
+    if (isGM) {
+      reading = TarokkaState.getGmView();
+    }
     const secret = TarokkaState.getSecret();
     const plan = TarokkaState.getPlan();
     if (reading.id !== this.lastDealId) {
@@ -126,6 +97,12 @@ export class TarokkaReadingApp extends Application {
       };
     });
 
+    const next = nextStep(Boolean(reading.id), secret.stages);
+    let step = "";
+    if (isGM) {
+      step = t(`TAROKKA.Steps.${next.step}`, { number: next.number });
+    }
+
     const problems = planProblems(plan);
     const setup = POSITIONS.map((position, index) => ({
       index,
@@ -142,13 +119,23 @@ export class TarokkaReadingApp extends Application {
     return {
       isGM,
       slots,
-      dealt: Boolean(reading.id),
-      hasNext: Boolean(reading.id) && nextIndex >= 0,
-      setupOpen: isGM && this.setupOpen,
+      step,
+      preparing: isGM && this.preparing,
       setup,
       canDeal: problems.length === 0,
+      broadcasting: Boolean(reading.broadcast),
       backImage: customImage("back", cardOverrides())
     };
+  }
+
+  async newReading() {
+    if (TarokkaState.getSecret().id) {
+      const confirmed = await confirmDialog(t("TAROKKA.NewReading"), t("TAROKKA.NewReadingConfirm"));
+      if (!confirmed) {
+        return;
+      }
+    }
+    await TarokkaState.deal();
   }
 
   activateListeners(html) {
@@ -165,29 +152,27 @@ export class TarokkaReadingApp extends Application {
       return;
     }
 
-    html.find("[data-tk-action='next'], [data-next-slot]").on("click", () => TarokkaState.placeNext());
+    html.find("[data-next-slot]").on("click", () => TarokkaState.placeNext());
     html.find("[data-flip-slot]").on("click", (event) => TarokkaState.flip(Number(event.currentTarget.dataset.flipSlot)));
-    html.find("[data-tk-action='deal']").on("click", () => {
-      this.setupOpen = false;
-      TarokkaState.deal();
-    });
-    html.find("[data-tk-action='reveal-all']").on("click", () => TarokkaState.revealAll());
-    html.find("[data-tk-action='reset']").on("click", () => TarokkaState.reset());
-    html.find("[data-tk-action='setup']").on("click", () => {
-      this.setupOpen = !this.setupOpen;
+    html.find("[data-tk-action='prepare']").on("click", () => {
+      this.preparing = !this.preparing;
       this.render(false);
     });
-
+    html.find("[data-tk-action='deal']").on("click", () => {
+      this.preparing = false;
+      this.newReading();
+    });
     html.find("[data-plan-card]").on("change", async (event) => {
       const plan = TarokkaState.getPlan();
       plan[Number(event.currentTarget.dataset.planCard)].cardId = event.currentTarget.value || null;
       await TarokkaState.savePlan(plan);
-      this.render(false);
     });
     html.find("[data-plan-note]").on("change", async (event) => {
       const plan = TarokkaState.getPlan();
       plan[Number(event.currentTarget.dataset.planNote)].note = event.currentTarget.value;
       await TarokkaState.savePlan(plan);
     });
+    html.find("[data-tk-action='broadcast']").on("click", () => TarokkaState.setBroadcast(true));
+    html.find("[data-tk-action='stop-broadcast']").on("click", () => TarokkaState.setBroadcast(false));
   }
 }

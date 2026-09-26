@@ -8,8 +8,8 @@
   --tk-text: #e6ddd0;
   --tk-muted: #8d8494;
   --tk-border: rgba(216, 179, 106, 0.25);
-  --tk-card-width: 120px;
-  --tk-card-height: 168px;
+  --tk-card-width: 110px;
+  --tk-card-height: 154px;
 
   color: var(--tk-text);
   font-size: 12px;
@@ -25,17 +25,18 @@
 
 .tk-toolbar {
   display: flex;
-  flex-wrap: wrap;
   gap: 6px;
-  padding: 8px 10px;
+  padding: 8px 12px;
   border-bottom: 1px solid var(--tk-border);
 }
 
 .tk-toolbar button {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
+  height: auto;
+  padding: 5px 12px;
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1.3;
+  white-space: nowrap;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--tk-border);
   border-radius: 6px;
@@ -48,26 +49,45 @@
 }
 
 .tk-toolbar button:disabled {
-  opacity: 0.4;
+  opacity: 0.35;
   cursor: not-allowed;
+}
+
+.tk-toolbar .tk-broadcast {
+  margin-left: auto;
+}
+
+.tk-toolbar .tk-broadcast.is-live {
+  color: #f0d9d0;
+  background: rgba(180, 60, 50, 0.35);
+  border-color: #c0584a;
+}
+
+.tk-step {
+  margin: 0;
+  padding: 0 16px 14px;
+  color: var(--tk-muted);
+  font-size: 12px;
+  text-align: center;
 }
 
 .tk-setup {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: 10px;
-  border-bottom: 1px solid var(--tk-border);
+  gap: 8px;
+  min-height: calc(var(--tk-card-height) * 3 + 150px);
+  padding: 14px;
 }
 
 .tk-setup-hint {
   margin: 0 0 4px;
   color: var(--tk-muted);
+  font-size: 12px;
 }
 
 .tk-setup-row {
   display: grid;
-  grid-template-columns: 170px 170px 1fr;
+  grid-template-columns: 130px 140px 1fr;
   align-items: center;
   gap: 8px;
 }
@@ -92,6 +112,14 @@
 
 .tk-setup-row label {
   color: var(--tk-gold);
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.tk-setup-row select,
+.tk-setup-row input[type="text"] {
+  height: 28px;
+  font-size: 12px;
 }
 
 .tk-problem {
@@ -106,11 +134,11 @@
     ". symbol ."
     "tome enemy sword"
     ". ally .";
-  grid-template-columns: repeat(3, calc(var(--tk-card-width) + 40px));
+  grid-template-columns: repeat(3, calc(var(--tk-card-width) + 50px));
   justify-content: center;
   justify-items: center;
-  gap: 14px 18px;
-  padding: 20px 16px 24px;
+  gap: 12px 10px;
+  padding: 16px;
 }
 
 .tk-slot {
@@ -133,7 +161,10 @@
 }
 
 .tk-slot-label {
-  max-width: calc(var(--tk-card-width) + 30px);
+  max-width: calc(var(--tk-card-width) + 46px);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   color: var(--tk-muted);
   font-size: 10px;
   text-align: center;
@@ -217,11 +248,6 @@
   border-color: var(--tk-gold);
   box-shadow: 0 0 12px rgba(216, 179, 106, 0.35);
   cursor: pointer;
-}
-
-.tk-toolbar .tk-next {
-  color: var(--tk-gold);
-  border-color: var(--tk-gold);
 }
 
 .tk-card-inner {
