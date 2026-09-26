@@ -1,0 +1,46 @@
+<form class="tk-config" autocomplete="off">
+  <div class="tk-config-intro">
+    <p class="tk-config-hint">{{localize "TAROKKA.CardsConfig.Hint"}}</p>
+    <button type="button" data-import title="{{localize 'TAROKKA.CardsConfig.ImportHint'}}">{{localize "TAROKKA.CardsConfig.Import"}}</button>
+  </div>
+  <p class="tk-config-recommend">{{{localize "TAROKKA.CardsConfig.Recommend"}}}</p>
+  <details class="tk-config-help">
+    <summary>{{localize "TAROKKA.CardsConfig.Help.Title"}}</summary>
+    <ol>
+      <li>{{localize "TAROKKA.CardsConfig.Help.Step1"}}</li>
+      <li>{{{localize "TAROKKA.CardsConfig.Help.Step2"}}}</li>
+      <li>{{localize "TAROKKA.CardsConfig.Help.Step3"}}</li>
+      <li>{{localize "TAROKKA.CardsConfig.Help.Step4"}}</li>
+    </ol>
+    <p class="tk-config-help-note">{{localize "TAROKKA.CardsConfig.Help.Names"}}</p>
+    <ul class="tk-config-help-note">
+      <li>{{{localize "TAROKKA.CardsConfig.Help.CardName"}}}</li>
+      <li>{{{localize "TAROKKA.CardsConfig.Help.CardCode"}}}</li>
+    </ul>
+  </details>
+  <div class="tk-config-list">
+    {{#each groups}}
+    <h3 class="tk-config-group">{{this.label}}</h3>
+    {{#each this.cards}}
+    <div class="tk-config-row" data-card="{{this.id}}" data-printed-name="{{this.printedName}}">
+      <img class="tk-config-preview {{#unless this.preview}}is-missing{{/unless}}" src="{{this.preview}}" alt="">
+      <div class="tk-config-fields">
+        <span class="tk-config-file">{{localize "TAROKKA.CardsConfig.FileName"}} <code data-file-name>{{this.fileName}}</code>{{#if this.showId}} {{localize "TAROKKA.CardsConfig.Or"}} <code>{{this.id}}</code>{{/if}}</span>
+        {{#unless this.isBack}}
+        <input type="text" name="name.{{this.id}}" value="{{this.name}}" placeholder="{{this.printedName}}" data-name-input>
+        {{/unless}}
+        <div class="tk-config-image">
+          <input type="text" name="image.{{this.id}}" value="{{this.image}}" placeholder="{{localize 'TAROKKA.CardsConfig.GenericImage'}}" data-image-input>
+          <button type="button" data-browse title="{{localize 'TAROKKA.CardsConfig.Browse'}}"><i class="fas fa-file-image"></i></button>
+          <button type="button" data-clear title="{{localize 'TAROKKA.CardsConfig.Clear'}}"><i class="fas fa-rotate-left"></i></button>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+    {{/each}}
+  </div>
+  <footer class="tk-config-footer">
+    <button type="button" class="tk-config-danger" data-reset-all>{{localize "TAROKKA.CardsConfig.ResetAll"}}</button>
+    <button type="submit">{{localize "TAROKKA.CardsConfig.Save"}}</button>
+  </footer>
+</form>

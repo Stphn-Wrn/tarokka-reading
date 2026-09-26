@@ -1,0 +1,74 @@
+<div class="tk-reading">
+  {{#if isGM}}
+  <nav class="tk-toolbar">
+    <button type="button" data-tk-action="setup" class="{{#if setupOpen}}active{{/if}}">{{localize "TAROKKA.Prepare"}}</button>
+    <button type="button" data-tk-action="deal" {{#unless canDeal}}disabled{{/unless}}>{{localize "TAROKKA.Deal"}}</button>
+    {{#if hasNext}}
+    <button type="button" class="tk-next" data-tk-action="next">{{localize "TAROKKA.Next"}}</button>
+    {{/if}}
+    {{#if dealt}}
+    <button type="button" data-tk-action="reveal-all">{{localize "TAROKKA.RevealAll"}}</button>
+    <button type="button" data-tk-action="reset">{{localize "TAROKKA.Reset"}}</button>
+    {{/if}}
+  </nav>
+  {{/if}}
+
+  {{#if setupOpen}}
+  <section class="tk-setup">
+    <p class="tk-setup-hint">{{localize "TAROKKA.SetupHint"}}</p>
+    {{#each setup}}
+    <div class="tk-setup-row">
+      <label>{{this.label}}</label>
+      <select data-plan-card="{{this.index}}">
+        <option value="">{{localize "TAROKKA.Random"}}</option>
+        {{#each this.options}}
+        <option value="{{this.id}}" {{#if this.selected}}selected{{/if}}>{{this.name}}</option>
+        {{/each}}
+      </select>
+      <input type="text" data-plan-note="{{this.index}}" value="{{this.note}}" placeholder="{{localize 'TAROKKA.NotePlaceholder'}}">
+      {{#if this.problem}}<span class="tk-problem">{{localize (concat "TAROKKA.Problems." this.problem)}}</span>{{/if}}
+    </div>
+    {{/each}}
+  </section>
+  {{/if}}
+
+  <div class="tk-table">
+    {{#each slots}}
+    <div class="tk-slot tk-slot-{{this.id}}">
+      {{#if this.placed}}
+      <div class="tk-card {{#if this.arrive}}tk-arrive{{/if}} {{#if this.revealed}}is-revealed{{/if}} {{#if this.canFlip}}can-flip{{/if}}" {{#if this.flip}}data-flip{{/if}} {{#if this.canFlip}}data-flip-slot="{{this.index}}"{{/if}}>
+        <div class="tk-card-inner">
+          <div class="tk-face tk-back">
+            <i class="fas fa-diamond"></i>
+            {{#if @root.backImage}}<img class="tk-back-image" src="{{@root.backImage}}" alt="">{{/if}}
+          </div>
+          <div class="tk-face tk-front">
+            {{#if this.card}}
+              <span class="tk-front-value">{{this.card.value}}</span>
+              <i class="fas {{this.card.icon}} tk-front-icon"></i>
+              <span class="tk-front-name">{{this.card.name}}</span>
+              <span class="tk-front-suit">{{this.card.suit}}</span>
+              {{#if this.card.image}}<img class="tk-front-image" src="{{this.card.image}}" alt="{{this.card.name}}">{{/if}}
+            {{/if}}
+          </div>
+        </div>
+      </div>
+      {{else}}
+      <div class="tk-card-placeholder {{#if this.dealt}}is-dealt{{/if}} {{#if this.isNext}}is-next{{/if}}" {{#if this.isNext}}data-next-slot title="{{localize 'TAROKKA.Next'}}"{{/if}}>
+        <span>{{this.number}}</span>
+      </div>
+      {{/if}}
+      {{#if @root.isGM}}
+      <span class="tk-slot-label">{{this.label}}</span>
+      {{#if this.card}}
+      <div class="tk-popover">
+        <span class="tk-popover-position">{{this.label}}</span>
+        <span class="tk-popover-card">{{this.card.name}}</span>
+        {{#if this.note}}<span class="tk-popover-note">{{this.note}}</span>{{/if}}
+      </div>
+      {{/if}}
+      {{/if}}
+    </div>
+    {{/each}}
+  </div>
+</div>

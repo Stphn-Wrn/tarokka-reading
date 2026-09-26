@@ -1,0 +1,537 @@
+.tarokka-reading .window-content {
+  padding: 0;
+  background: #120f16;
+}
+
+.tk-reading {
+  --tk-gold: #d8b36a;
+  --tk-text: #e6ddd0;
+  --tk-muted: #8d8494;
+  --tk-border: rgba(216, 179, 106, 0.25);
+  --tk-card-width: 120px;
+  --tk-card-height: 168px;
+
+  color: var(--tk-text);
+  font-size: 12px;
+}
+
+.tk-reading button {
+  width: auto;
+  margin: 0;
+  line-height: normal;
+  color: inherit;
+  cursor: pointer;
+}
+
+.tk-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--tk-border);
+}
+
+.tk-toolbar button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--tk-border);
+  border-radius: 6px;
+}
+
+.tk-toolbar button.active,
+.tk-toolbar button:hover:not(:disabled) {
+  color: var(--tk-gold);
+  border-color: var(--tk-gold);
+}
+
+.tk-toolbar button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.tk-setup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  border-bottom: 1px solid var(--tk-border);
+}
+
+.tk-setup-hint {
+  margin: 0 0 4px;
+  color: var(--tk-muted);
+}
+
+.tk-setup-row {
+  display: grid;
+  grid-template-columns: 170px 170px 1fr;
+  align-items: center;
+  gap: 8px;
+}
+
+.tk-setup-row input[type="text"] {
+  height: auto;
+  padding: 6px 8px;
+  color: var(--tk-text);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--tk-border);
+  border-radius: 6px;
+}
+
+.tk-setup-row input[type="text"]::placeholder {
+  color: var(--tk-muted);
+}
+
+.tk-setup-row input[type="text"]:focus {
+  border-color: var(--tk-gold);
+  box-shadow: none;
+}
+
+.tk-setup-row label {
+  color: var(--tk-gold);
+}
+
+.tk-problem {
+  grid-column: 2 / -1;
+  color: #d9754f;
+  font-size: 11px;
+}
+
+.tk-table {
+  display: grid;
+  grid-template-areas:
+    ". symbol ."
+    "tome enemy sword"
+    ". ally .";
+  grid-template-columns: repeat(3, calc(var(--tk-card-width) + 40px));
+  justify-content: center;
+  justify-items: center;
+  gap: 14px 18px;
+  padding: 20px 16px 24px;
+}
+
+.tk-slot {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  perspective: 900px;
+}
+
+.tk-slot-tome { grid-area: tome; }
+.tk-slot-symbol { grid-area: symbol; }
+.tk-slot-sword { grid-area: sword; }
+.tk-slot-ally { grid-area: ally; }
+.tk-slot-enemy { grid-area: enemy; }
+
+.tk-slot:hover {
+  z-index: 5;
+}
+
+.tk-slot-label {
+  max-width: calc(var(--tk-card-width) + 30px);
+  color: var(--tk-muted);
+  font-size: 10px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.tk-popover {
+  position: absolute;
+  top: 50%;
+  left: calc(100% - 8px);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 190px;
+  padding: 8px 10px;
+  font-size: 11px;
+  background: #1c1622;
+  border: 1px solid var(--tk-gold);
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-50%);
+  transition: opacity 0.15s ease, visibility 0.15s ease;
+}
+
+.tk-slot:hover .tk-popover {
+  opacity: 1;
+  visibility: visible;
+}
+
+.tk-slot-sword .tk-popover {
+  right: calc(100% - 8px);
+  left: auto;
+}
+
+.tk-popover-position {
+  color: var(--tk-muted);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.tk-popover-card {
+  color: var(--tk-gold);
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.tk-popover-note {
+  color: var(--tk-text);
+  font-style: italic;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.tk-card,
+.tk-card-placeholder {
+  width: var(--tk-card-width);
+  height: var(--tk-card-height);
+}
+
+.tk-card-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--tk-border);
+  font-size: 28px;
+  border: 1px dashed var(--tk-border);
+  border-radius: 10px;
+}
+
+.tk-card-placeholder.is-dealt {
+  color: var(--tk-muted);
+}
+
+.tk-card-placeholder.is-next {
+  color: var(--tk-gold);
+  border-color: var(--tk-gold);
+  box-shadow: 0 0 12px rgba(216, 179, 106, 0.35);
+  cursor: pointer;
+}
+
+.tk-toolbar .tk-next {
+  color: var(--tk-gold);
+  border-color: var(--tk-gold);
+}
+
+.tk-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.9s cubic-bezier(0.3, 0.7, 0.2, 1);
+}
+
+.tk-card.can-flip {
+  cursor: pointer;
+}
+
+.tk-card.can-flip .tk-back {
+  box-shadow: 0 0 14px rgba(216, 179, 106, 0.55);
+}
+
+.tk-card.can-flip:hover .tk-card-inner {
+  transform: translateY(-4px);
+}
+
+.tk-card.is-revealed .tk-card-inner {
+  transform: rotateY(180deg);
+}
+
+.tk-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid var(--tk-gold);
+  border-radius: 10px;
+  backface-visibility: hidden;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+}
+
+.tk-face img {
+  width: 100%;
+  height: 100%;
+  border: none;
+  object-fit: cover;
+}
+
+.tk-back::before,
+.tk-front::before {
+  position: absolute;
+  inset: 5px;
+  content: "";
+  border: 1px solid currentColor;
+  border-radius: 7px;
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.tk-front-image,
+.tk-back-image {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.tk-back {
+  color: var(--tk-gold);
+  font-size: 34px;
+  background:
+    radial-gradient(circle at center, rgba(216, 179, 106, 0.18), transparent 60%),
+    repeating-linear-gradient(45deg, #2a1d33 0 6px, #22172b 6px 12px);
+}
+
+.tk-front {
+  gap: 6px;
+  padding: 10px 6px;
+  color: #2a1d12;
+  text-align: center;
+  background: linear-gradient(160deg, #f1e4c6, #d9c49a);
+  transform: rotateY(180deg);
+}
+
+.tk-front-value {
+  position: absolute;
+  top: 10px;
+  left: 11px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.tk-front-icon {
+  font-size: 32px;
+  color: #6b2d2d;
+}
+
+.tk-front-name {
+  font-family: var(--font-primary, serif);
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 1.15;
+}
+
+.tk-front-suit {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.7;
+}
+
+.tk-arrive:not(.is-revealed) {
+  animation: tk-deal 0.6s ease-out both;
+}
+
+@keyframes tk-deal {
+  from {
+    opacity: 0;
+    transform: translateY(-120px) rotate(-8deg) scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.tarokka-cards-config .window-content {
+  padding: 0;
+}
+
+.tk-config {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: var(--tk-text, #e6ddd0);
+  font-size: 12px;
+  --tk-gold: #d8b36a;
+  --tk-text: #e6ddd0;
+  --tk-muted: #8d8494;
+  --tk-border: rgba(216, 179, 106, 0.25);
+}
+
+.tk-config-intro {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--tk-border);
+}
+
+.tk-config-hint {
+  flex: 1;
+  margin: 0;
+  color: var(--tk-muted);
+}
+
+.tk-config-intro button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tk-config-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 12px 12px;
+}
+
+.tk-config-group {
+  margin: 14px 0 6px;
+  padding-bottom: 4px;
+  color: var(--tk-gold);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--tk-border);
+}
+
+.tk-config-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 0;
+}
+
+.tk-config-preview {
+  flex: 0 0 auto;
+  width: 38px;
+  height: 60px;
+  object-fit: cover;
+  border: 1px solid var(--tk-border);
+  border-radius: 4px;
+}
+
+.tk-config-preview.is-missing {
+  content: url("data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==");
+  background: repeating-linear-gradient(45deg, #2a1d33 0 6px, #22172b 6px 12px);
+}
+
+.tk-config-fields {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tk-config-image {
+  display: flex;
+  gap: 4px;
+}
+
+.tk-config input[type="text"] {
+  flex: 1;
+  height: auto;
+  padding: 5px 8px;
+  color: var(--tk-text);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--tk-border);
+  border-radius: 6px;
+}
+
+.tk-config input[type="text"]::placeholder {
+  color: var(--tk-muted);
+}
+
+.tk-config input[type="text"]:focus {
+  border-color: var(--tk-gold);
+  box-shadow: none;
+}
+
+.tk-config button {
+  flex: 0 0 auto;
+  width: auto;
+  margin: 0;
+  padding: 4px 8px;
+  line-height: normal;
+  color: var(--tk-text);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--tk-border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.tk-config button:hover {
+  color: var(--tk-gold);
+  border-color: var(--tk-gold);
+}
+
+.tk-config-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-top: 1px solid var(--tk-border);
+}
+
+.tk-config button.tk-config-danger:hover {
+  color: #d9754f;
+  border-color: #d9754f;
+}
+
+.tk-config-help {
+  padding: 8px 12px;
+  color: var(--tk-muted);
+  border-bottom: 1px solid var(--tk-border);
+}
+
+.tk-config-help summary {
+  color: var(--tk-gold);
+  cursor: pointer;
+}
+
+.tk-config-help ol {
+  margin: 8px 0 6px;
+  padding-left: 20px;
+  color: var(--tk-text);
+}
+
+.tk-config-help li {
+  margin-bottom: 4px;
+}
+
+.tk-config-help-note {
+  margin: 6px 0 2px;
+  font-size: 11px;
+}
+
+ul.tk-config-help-note {
+  padding-left: 18px;
+}
+
+.tk-config code,
+.tk-config-file code {
+  padding: 0 4px;
+  color: var(--tk-text);
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  border-radius: 3px;
+}
+
+.tk-config-file {
+  color: var(--tk-muted);
+  font-size: 10px;
+}
+
+.tk-config-recommend {
+  margin: 0;
+  padding: 8px 12px;
+  color: var(--tk-text);
+  border-bottom: 1px solid var(--tk-border);
+}
+
+.tk-config-recommend a {
+  color: var(--tk-gold);
+  text-decoration: underline;
+}
