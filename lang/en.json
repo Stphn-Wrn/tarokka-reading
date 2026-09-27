@@ -112,7 +112,8 @@
         "Step4": "Cards that were not found keep a hatched thumbnail: fill them in by hand with the \"Pick an image\" button on their row, whatever the file name."
       },
       "Or": "or",
-      "Recommend": "No images? We recommend the <a href=\"https://www.pyramking.com/tarokka-deck/\" target=\"_blank\" rel=\"noopener\">Digital Color Tarokka Deck by Pyram King</a> (free, 54 cards in WebP). Import its folder as is, no renaming needed."
+      "Recommend": "No images? We recommend the <a href=\"https://www.pyramking.com/tarokka-deck/\" target=\"_blank\" rel=\"noopener\">Digital Color Tarokka Deck by Pyram King</a> (free, 54 cards in WebP). Import its folder as is, no renaming needed.",
+      "NothingFound": "No image recognized in \"{folder}\". Open the folder (double-click) before clicking \"Select directory\"."
     },
     "Broadcast": "Show to players",
     "StopBroadcast": "Stop showing",

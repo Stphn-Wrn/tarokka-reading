@@ -87,3 +87,9 @@ test("importer un dossier reconnaît les noms du jeu conseillé, sans renommage"
     "broken-one": "deck/Broken One.webp"
   });
 });
+
+test("importer un dossier reconnaît les adresses complètes des images, comme sur The Forge", () => {
+  const files = ["https://assets.forge-vtt.com/abc/tarokka-cards/1%20-%20coins.webp?v=2"];
+  const cards = [{ id: "coins-1", name: "Swashbuckler" }];
+  assert.deepEqual(matchFolderImages(files, cards), { "coins-1": files[0] });
+});

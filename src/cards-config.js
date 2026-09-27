@@ -9,6 +9,14 @@ function filePickerClass() {
   return foundry.applications?.apps?.FilePicker?.implementation ?? globalThis.FilePicker;
 }
 
+function displayedName(row) {
+  const input = row.querySelector("[data-name-input]");
+  if (input?.value.trim()) {
+    return input.value;
+  }
+  return row.dataset.printedName;
+}
+
 function row(id, printedName, overrides) {
   const name = overrides[id]?.name ?? "";
   const fileName = fileSlug(name || printedName);
@@ -91,19 +99,42 @@ export class TarokkaCardsConfig extends FormApplication {
       type: "folder",
       callback: async (path, picker) => {
         const source = picker?.activeSource ?? "data";
-        const result = await Picker.browse(source, path);
         const rows = html.find("[data-card]").toArray();
         const cards = rows.map((element) => ({ id: element.dataset.card, name: displayedName(element) }));
-        const matches = matchFolderImages(result.files ?? [], cards);
+        const matches = await this.findImages(Picker, source, path, cards);
+        const count = Object.keys(matches).length;
+        if (count === 0) {
+          ui.notifications.warn(t("TAROKKA.CardsConfig.NothingFound", { folder: path || "/" }));
+          return;
+        }
         for (const element of rows) {
           const image = matches[element.dataset.card];
           if (image) {
             this.setImage(element, image);
           }
         }
-        ui.notifications.info(t("TAROKKA.CardsConfig.Imported", { count: Object.keys(matches).length }));
+        ui.notifications.info(t("TAROKKA.CardsConfig.Imported", { count }));
       }
     }).browse();
+  }
+
+  async findImages(Picker, source, path, cards) {
+    const result = await Picker.browse(source, path);
+    const matches = matchFolderImages(result.files ?? [], cards);
+    if (Object.keys(matches).length > 0) {
+      return matches;
+    }
+    const nested = await Promise.all((result.dirs ?? []).map(async (dir) => {
+      const inner = await Picker.browse(source, dir);
+      return matchFolderImages(inner.files ?? [], cards);
+    }));
+    let best = {};
+    for (const candidate of nested) {
+      if (Object.keys(candidate).length > Object.keys(best).length) {
+        best = candidate;
+      }
+    }
+    return best;
   }
 
   async resetAll() {

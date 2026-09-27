@@ -43,7 +43,7 @@ function aliases(cardId) {
 export function matchFolderImages(files, cards) {
   const images = new Map();
   for (const file of files) {
-    const fileName = decodeURIComponent(file.split("/").pop());
+    const fileName = decodeURIComponent(file.split(/[?#]/)[0].split("/").pop());
     const dot = fileName.lastIndexOf(".");
     if (dot < 0 || !IMAGE_EXTENSIONS.includes(fileName.slice(dot + 1).toLowerCase())) {
       continue;

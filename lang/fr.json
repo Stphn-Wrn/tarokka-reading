@@ -112,7 +112,8 @@
         "Step4": "Les cartes qui n'ont pas été trouvées gardent une miniature hachurée : complétez-les à la main avec le bouton « Choisir une image » de leur ligne, quel que soit le nom du fichier."
       },
       "Or": "ou",
-      "Recommend": "Pas d'images ? Nous vous conseillons le <a href=\"https://www.pyramking.com/tarokka-deck/\" target=\"_blank\" rel=\"noopener\">Digital Color Tarokka Deck de Pyram King</a> (gratuit, 54 cartes en WebP, textes en anglais). Importez son dossier tel quel, sans renommer les fichiers."
+      "Recommend": "Pas d'images ? Nous vous conseillons le <a href=\"https://www.pyramking.com/tarokka-deck/\" target=\"_blank\" rel=\"noopener\">Digital Color Tarokka Deck de Pyram King</a> (gratuit, 54 cartes en WebP, textes en anglais). Importez son dossier tel quel, sans renommer les fichiers.",
+      "NothingFound": "Aucune image reconnue dans « {folder} ». Entrez dans le dossier (double-clic) avant de cliquer sur « Sélectionner le répertoire »."
     },
     "Broadcast": "Diffuser aux joueurs",
     "StopBroadcast": "Arrêter la diffusion",
