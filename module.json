@@ -2,7 +2,7 @@
   "id": "tarokka-reading",
   "title": "Tarokka Reading",
   "description": "Madame Eva's Tarokka reading for Curse of Strahd: the GM prepares or draws the five cards, deals them face down and reveals them one by one, in sync for every player.",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "compatibility": {
     "minimum": "11",
     "verified": "14"
@@ -14,7 +14,7 @@
   ],
   "url": "https://github.com/Stphn-Wrn/tarokka-reading",
   "manifest": "https://raw.githubusercontent.com/Stphn-Wrn/tarokka-reading/main/module.json",
-  "download": "https://github.com/Stphn-Wrn/tarokka-reading/releases/download/v1.0.3/tarokka-reading.zip",
+  "download": "https://github.com/Stphn-Wrn/tarokka-reading/releases/download/v1.0.4/tarokka-reading.zip",
   "license": "MIT",
   "esmodules": [
     "src/main.js"
