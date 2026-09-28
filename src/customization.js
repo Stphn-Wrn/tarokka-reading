@@ -12,6 +12,16 @@ export function customImage(cardId, overrides) {
 
 const IMAGE_EXTENSIONS = ["webp", "png", "jpg", "jpeg", "avif", "gif", "svg"];
 
+const FORGE_ASSETS = /^https:\/\/assets\.forge-vtt\.com\/[^/]+\/?(.*)$/;
+
+export function browseTarget(path, source) {
+  const forge = (path ?? "").match(FORGE_ASSETS);
+  if (forge) {
+    return { source: "forgevtt", path: decodeURIComponent(forge[1]) };
+  }
+  return { source, path: path ?? "" };
+}
+
 export function fileSlug(text) {
   return (text ?? "")
     .normalize("NFD")

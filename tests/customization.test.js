@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { cleanOverrides, customName, customImage, fileSlug, matchFolderImages } from "../src/customization.js";
+import { browseTarget, cleanOverrides, customName, customImage, fileSlug, matchFolderImages } from "../src/customization.js";
 
 test("une carte renommée par le MJ affiche son nouveau nom", () => {
   const overrides = { raven: { name: "Le Corbeau de Barovie" } };
@@ -92,4 +92,13 @@ test("importer un dossier reconnaît les adresses complètes des images, comme s
   const files = ["https://assets.forge-vtt.com/abc/tarokka-cards/1%20-%20coins.webp?v=2"];
   const cards = [{ id: "coins-1", name: "Swashbuckler" }];
   assert.deepEqual(matchFolderImages(files, cards), { "coins-1": files[0] });
+});
+
+test("un dossier de The Forge donné par son adresse complète est lu dans les assets The Forge", () => {
+  const target = browseTarget("https://assets.forge-vtt.com/65e4f0edc1ed894e52c6673c/tarokka-cards/", "data");
+  assert.deepEqual(target, { source: "forgevtt", path: "tarokka-cards/" });
+});
+
+test("un dossier local garde sa source et son chemin", () => {
+  assert.deepEqual(browseTarget("tarokka-cards", "data"), { source: "data", path: "tarokka-cards" });
 });

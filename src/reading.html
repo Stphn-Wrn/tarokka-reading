@@ -39,7 +39,7 @@
             <i class="fas fa-diamond"></i>
             {{#if @root.backImage}}<img class="tk-back-image" src="{{@root.backImage}}" alt="">{{/if}}
           </div>
-          <div class="tk-face tk-front">
+          <div class="tk-face tk-front {{#if this.card.image}}has-image{{/if}}">
             {{#if this.card}}
               <span class="tk-front-value">{{this.card.value}}</span>
               <i class="fas {{this.card.icon}} tk-front-icon"></i>

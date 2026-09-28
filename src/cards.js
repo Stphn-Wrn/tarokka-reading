@@ -39,3 +39,17 @@ export function cardView(cardId) {
     image
   };
 }
+
+const preloaded = new Map();
+
+export function preloadCardImages() {
+  const overrides = cardOverrides();
+  for (const entry of Object.values(overrides)) {
+    if (entry?.image && !preloaded.has(entry.image)) {
+      const image = new Image();
+      image.src = entry.image;
+      image.decode().catch(() => null);
+      preloaded.set(entry.image, image);
+    }
+  }
+}

@@ -5,6 +5,28 @@ import { POSITIONS, nextStep, planProblems } from "./reading.js";
 import { cardsOfDeck } from "./deck.js";
 import { TarokkaState } from "./state.js";
 
+function imageKey(image) {
+  return `${image.className}|${image.getAttribute("src")}`;
+}
+
+function keepDisplayedImages(element, html) {
+  const displayed = new Map();
+  element.find(".tk-face img").each((index, image) => {
+    const key = imageKey(image);
+    if (!displayed.has(key)) {
+      displayed.set(key, []);
+    }
+    displayed.get(key).push(image);
+  });
+  html.find(".tk-face img").each((index, image) => {
+    const kept = displayed.get(imageKey(image))?.shift();
+    if (kept) {
+      kept.alt = image.alt;
+      image.replaceWith(kept);
+    }
+  });
+}
+
 export class TarokkaReadingApp extends Application {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -128,6 +150,11 @@ export class TarokkaReadingApp extends Application {
     };
   }
 
+  _replaceHTML(element, html, options) {
+    keepDisplayedImages(element, html);
+    super._replaceHTML(element, html, options);
+  }
+
   async newReading() {
     if (TarokkaState.getSecret().id) {
       const confirmed = await confirmDialog(t("TAROKKA.NewReading"), t("TAROKKA.NewReadingConfirm"));
@@ -140,13 +167,22 @@ export class TarokkaReadingApp extends Application {
 
   activateListeners(html) {
     super.activateListeners(html);
-    html.find(".tk-face img").on("error", (event) => event.currentTarget.remove());
+    html.find(".tk-face img").on("error", (event) => {
+      event.currentTarget.parentElement.classList.remove("has-image");
+      event.currentTarget.remove();
+    });
     html.find("[data-flip]").each((index, element) => {
       let delay = 60;
       if (element.classList.contains("tk-arrive")) {
         delay = 700;
       }
-      setTimeout(() => element.classList.add("is-revealed"), delay);
+      const image = element.querySelector(".tk-front-image");
+      let ready = Promise.resolve();
+      if (image) {
+        ready = image.decode().catch(() => null);
+      }
+      const timeout = new Promise((resolve) => setTimeout(resolve, 2500));
+      Promise.race([ready, timeout]).then(() => setTimeout(() => element.classList.add("is-revealed"), delay));
     });
     if (!game.user.isGM) {
       return;

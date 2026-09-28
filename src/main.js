@@ -3,6 +3,7 @@ import { emptyPlan } from "./reading.js";
 import { TarokkaReadingApp } from "./reading-app.js";
 import { TarokkaCardsConfig } from "./cards-config.js";
 import { TarokkaState } from "./state.js";
+import { preloadCardImages } from "./cards.js";
 
 function rerender() {
   const open = Object.values(ui.windows).find((app) => app instanceof TarokkaReadingApp);
@@ -41,7 +42,10 @@ Hooks.once("init", () => {
     config: false,
     type: Object,
     default: {},
-    onChange: rerender
+    onChange: () => {
+      preloadCardImages();
+      rerender();
+    }
   });
 
   game.settings.registerMenu(MODULE_ID, "cardsConfig", {
@@ -55,6 +59,7 @@ Hooks.once("init", () => {
 });
 
 Hooks.once("ready", () => {
+  preloadCardImages();
   if (!game.user.isGM && TarokkaState.getPublic()?.broadcast) {
     new TarokkaReadingApp().render(true);
   }

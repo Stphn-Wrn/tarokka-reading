@@ -122,6 +122,15 @@
   font-size: 12px;
 }
 
+.tk-setup-row select {
+  color-scheme: dark;
+}
+
+.tk-setup-row option {
+  color: var(--tk-text);
+  background: #120f16;
+}
+
 .tk-problem {
   grid-column: 2 / -1;
   color: #d9754f;
@@ -328,6 +337,10 @@
   text-align: center;
   background: linear-gradient(160deg, #f1e4c6, #d9c49a);
   transform: rotateY(180deg);
+}
+
+.tk-front.has-image > :not(.tk-front-image) {
+  visibility: hidden;
 }
 
 .tk-front-value {

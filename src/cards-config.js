@@ -1,6 +1,6 @@
 import { MODULE_ID, confirmDialog, modulePath, t } from "./constants.js";
 import { COMMON_DECK, HIGH_DECK } from "./deck.js";
-import { cleanOverrides, customImage, fileSlug, matchFolderImages } from "./customization.js";
+import { browseTarget, cleanOverrides, customImage, fileSlug, matchFolderImages } from "./customization.js";
 
 const GROUPS = ["crowns", "swords", "stars", "coins", "glyphs"];
 const BACK_ID = "back";
@@ -95,16 +95,21 @@ export class TarokkaCardsConfig extends FormApplication {
 
   importFolder(html) {
     const Picker = filePickerClass();
-    new Picker({
+    const picker = new Picker({
       type: "folder",
-      callback: async (path, picker) => {
-        const source = picker?.activeSource ?? "data";
+      callback: async (path) => {
+        const target = browseTarget(path, picker.activeSource ?? "data");
         const rows = html.find("[data-card]").toArray();
         const cards = rows.map((element) => ({ id: element.dataset.card, name: displayedName(element) }));
-        const matches = await this.findImages(Picker, source, path, cards);
+        let matches = {};
+        try {
+          matches = await this.findImages(Picker, target.source, target.path, cards);
+        } catch (error) {
+          console.error("tarokka-reading | folder import", target, error);
+        }
         const count = Object.keys(matches).length;
         if (count === 0) {
-          ui.notifications.warn(t("TAROKKA.CardsConfig.NothingFound", { folder: path || "/" }));
+          ui.notifications.warn(t("TAROKKA.CardsConfig.NothingFound", { folder: target.path || "/" }));
           return;
         }
         for (const element of rows) {
@@ -115,7 +120,8 @@ export class TarokkaCardsConfig extends FormApplication {
         }
         ui.notifications.info(t("TAROKKA.CardsConfig.Imported", { count }));
       }
-    }).browse();
+    });
+    picker.browse();
   }
 
   async findImages(Picker, source, path, cards) {
