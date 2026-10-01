@@ -11,7 +11,7 @@ function sequence(values) {
   };
 }
 
-test("le tirage suit la croix de Madame Eva : 3 cartes communes puis 2 Couronnes", () => {
+test("le tirage suit la croix : 3 cartes communes puis 2 Couronnes", () => {
   assert.deepEqual(POSITIONS.map((position) => [position.id, position.deck]), [
     ["tome", "common"],
     ["symbol", "common"],

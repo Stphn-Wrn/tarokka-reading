@@ -2,7 +2,8 @@
 
 🇬🇧 [English version](README.md)
 
-Module Foundry VTT pour le **tirage du Tarokka** de Madame Eva. Fonctionne avec n'importe quel système de jeu.
+Module Foundry VTT pour réaliser des **tirages de Tarokka immersifs**. Fonctionne avec n'importe quel système de jeu.
+
 
 ## Fonctionnalités
 

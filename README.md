@@ -2,7 +2,7 @@
 
 🇫🇷 [Version française](README.fr.md)
 
-Foundry VTT module for Madame Eva's **Tarokka reading**. Works with any game system.
+Foundry VTT module for immersive **Tarokka fortune-telling**. Works with any game system.
 
 ## Features
 
