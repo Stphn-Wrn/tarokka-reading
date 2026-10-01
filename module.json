@@ -1,7 +1,7 @@
 {
   "id": "tarokka-reading",
   "title": "Tarokka Reading",
-  "description": "Madame Eva's Tarokka reading for Curse of Strahd: the GM prepares or draws the five cards, deals them face down and reveals them one by one, in sync for every player.",
+  "description": "Madame Eva's Tarokka reading: the GM prepares or draws the five cards, deals them face down and reveals them one by one, in sync for every player.",
   "version": "1.0.4",
   "compatibility": {
     "minimum": "11",

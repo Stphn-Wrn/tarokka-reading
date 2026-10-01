@@ -11,11 +11,11 @@
       "duplicate": "Cette carte est déjà utilisée à une autre position."
     },
     "Positions": {
-      "tome": "Le livre de Strahd",
-      "symbol": "Le Symbole sacré de Ravenkind",
-      "sword": "L'Épée Solaire",
+      "tome": "L'Artefact",
+      "symbol": "Le Symbole",
+      "sword": "La Lame",
       "ally": "L'allié",
-      "enemy": "Le repaire de Strahd"
+      "enemy": "Le Repaire"
     },
     "Suits": {
       "swords": "Épées",

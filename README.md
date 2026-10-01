@@ -2,11 +2,11 @@
 
 🇫🇷 [Version française](README.fr.md)
 
-Foundry VTT module for Madame Eva's **Tarokka reading** in *Curse of Strahd*. Works with any game system.
+Foundry VTT module for Madame Eva's **Tarokka reading**. Works with any game system.
 
 ## Features
 
-- **The five-card cross** — The Tome of Strahd, the Holy Symbol of Ravenkind and the Sunsword from the common deck; the Ally and Strahd's lair from the high deck (Crowns).
+- **The five-card cross** — Five cards from the common deck and the high deck (Crowns), arranged in a cross formation.
 - **Prepared or random** — The GM picks a card for each position ahead of time, or leaves it to chance. Duplicates and wrong decks are flagged.
 - **Dealt face down, revealed one by one** — Cards slide into the cross face down; the GM flips each one with a click, when the story calls for it, and each flip plays for every player at the same time.
 - **GM only, shown when the GM decides** — Only the GM sees the tool. **Show to players** opens the window for them, **Stop showing** closes it; nothing is shared until then.
@@ -47,9 +47,7 @@ Note that the expected name depends on Foundry's language: in French, the Darklo
 
 No images? We recommend the [Digital Color Tarokka Deck by Pyram King](https://www.pyramking.com/tarokka-deck/): free, 54 color cards, in JPG or WebP. Import its folder as is: its file names (`1 - coins.webp`, `Warrior.webp`...) are recognized without renaming. This deck has no back: the module's generic back is used.
 
-For a real table, the official printed deck is Gale Force Nine's *Tarokka Deck*.
-
-The official Tarokka artwork belongs to Wizards of the Coast: use images you have the right to use.
+Make sure you have the right to use any images you import.
 
 ## Installation
 
@@ -66,4 +64,4 @@ npm test
 
 ## License
 
-Code under the MIT license. *Curse of Strahd* and the Tarokka deck are property of Wizards of the Coast; this module is an unofficial fan project and includes none of their text or art.
+Code under the MIT license. This module is not affiliated with or endorsed by any third party.

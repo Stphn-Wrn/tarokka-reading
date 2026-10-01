@@ -2,11 +2,11 @@
 
 🇬🇧 [English version](README.md)
 
-Module Foundry VTT pour le **tirage du Tarokka** de Madame Eva dans *La Malédiction de Strahd*. Fonctionne avec n'importe quel système de jeu.
+Module Foundry VTT pour le **tirage du Tarokka** de Madame Eva. Fonctionne avec n'importe quel système de jeu.
 
 ## Fonctionnalités
 
-- **La croix de cinq cartes** — Le Tome de Strahd, le Symbole sacré de Ravenkind et l'Épée du soleil tirés du paquet commun ; l'allié et le repaire de Strahd tirés du paquet des Couronnes.
+- **La croix de cinq cartes** — Cinq cartes tirées du paquet commun et du paquet des Couronnes, disposées en croix.
 - **Préparé ou au hasard** — Le MJ choisit à l'avance une carte pour chaque position, ou laisse faire le hasard. Doublons et mauvais paquets sont signalés.
 - **Distribué face cachée, révélé une à une** — Les cartes glissent dans la croix face cachée ; le MJ retourne chacune d'un clic, au moment voulu, et chaque retournement se joue chez tous les joueurs en même temps.
 - **Réservé au MJ, diffusé quand il le décide** — Seul le MJ voit l'outil. **Diffuser aux joueurs** ouvre la fenêtre chez eux, **Arrêter la diffusion** la referme ; sans diffusion, rien n'est partagé.
@@ -47,9 +47,7 @@ Attention, le nom attendu dépend de la langue de Foundry : en anglais, le Seign
 
 Pas d'images ? Nous vous conseillons le [Digital Color Tarokka Deck de Pyram King](https://www.pyramking.com/tarokka-deck/) : gratuit, 54 cartes en couleur, en JPG ou WebP, avec les noms imprimés en anglais. Importez son dossier tel quel : ses noms de fichiers (`1 - coins.webp`, `Warrior.webp`...) sont reconnus sans renommage. Ce jeu n'a pas de dos : le dos générique du module est utilisé.
 
-Pour jouer autour d'une vraie table, le jeu officiel imprimé est le *Tarokka Deck* de Gale Force Nine.
-
-Les illustrations officielles du Tarokka appartiennent à Wizards of the Coast : utilisez des images que vous avez le droit d'utiliser.
+Assurez-vous d'avoir le droit d'utiliser les images que vous importez.
 
 ## Installation
 
@@ -66,4 +64,4 @@ npm test
 
 ## Licence
 
-Code sous licence MIT. *La Malédiction de Strahd* et le jeu de Tarokka appartiennent à Wizards of the Coast ; ce module est un projet de fan non officiel et n'inclut aucun de leurs textes ni illustrations.
+Code sous licence MIT. Ce module n'est pas affilié à ni approuvé par un tiers quelconque.

@@ -11,11 +11,11 @@
       "duplicate": "This card is already used in another position."
     },
     "Positions": {
-      "tome": "The Tome of Strahd",
-      "symbol": "The Holy Symbol of Ravenkind",
-      "sword": "The Sunsword",
+      "tome": "The Artifact",
+      "symbol": "The Symbol",
+      "sword": "The Blade",
       "ally": "The Ally",
-      "enemy": "Strahd's Lair"
+      "enemy": "The Lair"
     },
     "Suits": {
       "swords": "Swords",
