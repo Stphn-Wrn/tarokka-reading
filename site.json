@@ -1,0 +1,26 @@
+{
+  "group": "strahd",
+  "platform": "foundry",
+  "icon": "fa-diamond",
+  "order": 30,
+  "text": {
+    "fr": {
+      "title": "Tirage du Tarokka",
+      "summary": "Tirage de Tarokka immersif, révélé carte par carte chez tous les joueurs. Tous systèmes.",
+      "features": [
+        "Tirage préparé ou au hasard",
+        "Cartes distribuées face cachée, retournées au rythme du MJ",
+        "Cartes personnalisables avec vos propres images"
+      ]
+    },
+    "en": {
+      "title": "Tarokka Reading",
+      "summary": "Immersive Tarokka reading, revealed card by card for every player. Any system.",
+      "features": [
+        "Prepared or random draw",
+        "Cards dealt face down, turned at the GM's pace",
+        "Cards customisable with your own images"
+      ]
+    }
+  }
+}
